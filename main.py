@@ -2,16 +2,16 @@ import pygame
 import sys
 import random
 
-class Snake(object):
+class Snake():
   def __init__(self):
-    self.lenght = 1
+    self.length = 1
     self.positions = [((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))]
     self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
     self.color = (17, 25, 47)
     self.score = 0
 
   def get_head_position(self):
-    return self.postitions[0]
+    return self.positions[0]
 
   def turn(self, point):
     if self.length > 1 and (point[0]* -1, point[1]* -1) == self.direction:
@@ -23,16 +23,16 @@ class Snake(object):
     cur = self.get_head_position()
     x, y = self.direction
     new = (((cur[0] + (x*GRIDSIZE)) % SCREEN_WIDTH), (cur[1] + (y*GRIDSIZE)) % SCREEN_HEIGHT)
-    if len(self.position) > 2 and new in self.position[2:]:
+    if len(self.positions) > 2 and new in self.positions[2:]:
       self.reset()
     else:
-      self.positon.insert(0, new)
-      if len(self.position) > self.length:
+      self.positions.insert(0, new)
+      if len(self.positions) > self.length:
         self.positions.pop()
 
   def reset(self):
     self.length = 1
-    self.position = [((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))]
+    self.positions = [((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))]
     self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
     self.score = 0
 
@@ -57,7 +57,7 @@ class Snake(object):
         elif event.key == pygame.K_RIGHT:
           self.turn(RIGHT)
 
-class Food(object):
+class Food():
   def __init__(self):
     self.position = (0,0)
     self.color = (223, 163, 49)
@@ -116,7 +116,7 @@ def main():
     draw_Grid(surface)
     snake.move()
     if snake.get_head_position() == food.position:
-      snake.lenght += 1
+      snake.length += 1
       snake.score += 1
       food.randomize_position()
     snake.draw(surface)
@@ -126,9 +126,11 @@ def main():
     screen.blit(text, (5,10 ))
     pygame.display.update()
  
+    """
     #handle events
     screen.blit(surface, (0,0))
     pygame.display.upadte()
+    """
 
 
 main()
